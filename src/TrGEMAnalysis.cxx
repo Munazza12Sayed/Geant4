@@ -39,6 +39,7 @@ void TrGEMAnalysis::PrepareNewEvent(const G4Event* /*anEvent*/)
   //  thisEventCentralEM = 0;
   //  thisEventSecondaries = 0;
   
+  
   Event = 0;
   EDepI = -10000;
   Trajnum = -10000;
@@ -294,6 +295,7 @@ void TrGEMAnalysis::EndOfEvent(const G4Event* anEvent)
 
   //Uncomment these lines for more verbosity:
   G4cout<<"Event ID: "<< anEvent->GetEventID() <<G4endl;
+  G4cout<<" ===================" <<G4endl;
   //<<G4BestUnit(thisEventTotEM,"Energy")<<" Secondaries: "<<thisEventSecondaries<<G4endl;
   //G4cout<<G4BestUnit(thisEventCentralEM,"Energy")<<G4endl;
 
