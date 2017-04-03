@@ -129,6 +129,7 @@ G4bool GasGapSensitiveDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
 
   G4double e1Prim = std::sqrt(track->GetMomentum().mag2() + (105*MeV)*(105*MeV)) - 105*MeV;
 
+  G4cout<<"  ========================================= "<<G4endl;
   
   G4cout<<" ======================================== "<<G4endl;
   G4cout<<" ======================================== "<<G4endl;
