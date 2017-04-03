@@ -1,0 +1,39 @@
+#ifndef RUNACTION_H
+#define RUNACTION_H 1
+
+#include "G4UserRunAction.hh"
+#include "G4Event.hh"
+#include "G4RootAnalysisManager.hh"
+#include "globals.hh"
+
+class G4Timer;
+class G4Run;
+class HistoManager;
+
+class RunAction : public G4UserRunAction
+{
+        public:
+            RunAction(HistoManager*);
+            ~RunAction();
+
+        public:
+		void BeginOfRunAction(const G4Run*);
+		void EndOfRunAction(const G4Run*);
+
+		void fillPerEvent(G4double, G4double, G4double, G4double);
+		
+		
+        private:
+		G4Timer* timer;
+	  
+	  HistoManager* fHistoManager;
+	  
+	  G4double fSumEAbs, fSum2EAbs;
+	  G4double fSumEGap, fSum2EGap;
+	  
+	  G4double fSumLAbs, fSum2LAbs;
+	  
+};
+
+#endif
+
