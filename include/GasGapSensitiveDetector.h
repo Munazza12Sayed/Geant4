@@ -61,6 +61,13 @@ class GasGapSensitiveDetector : public G4VSensitiveDetector
   //G4ThreeVector f;
   std::vector<G4ThreeVector>* fpos;
   G4ElectronIonPair* fElIonPair;
+
+
+  // find mean energies per ionisation 
+  G4double FindG4MeanEnergyPerIonPair(const G4Material*) const;
+
+  // dump mean energies per ionisation used in run time
+  void DumpMeanEnergyPerIonPair() const;
   
 
   typedef std::map<G4int,GasGapHit*> hitMap_t; //< Helper mapping layer number with hit
