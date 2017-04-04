@@ -9,6 +9,7 @@
  */
 
 #include "G4VSensitiveDetector.hh"
+#include "G4ThreeVector.hh"
 //class DetectorConstruction;
 //class RunAction;
  

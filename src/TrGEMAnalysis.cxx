@@ -75,11 +75,19 @@ void TrGEMAnalysis::PrepareNewEvent(const G4Event* /*anEvent*/)
     genZstep[k] = -10000.;
      
     nSec[k] = 0;
+    nIonAlStep[k] = 0;
 
-
+    for(int l=0;l<200;l++){
+      posIAlStepx[k][l] = 0;
+      posIAlStepy[k][l] = 0;
+      posIAlStepz[k][l] = 0;
+    }
+    
   }
    
 
+
+  
   //  elexevt = 0 ;
   //  posxevt = 0 ;
   //  gammaxevt = 0 ;
@@ -206,7 +214,9 @@ void TrGEMAnalysis::PrepareNewRun(const G4Run* /*aRun*/)
   t->Branch("TrajPoint",&TrajPoint,"TrajPoint/I");
   t->Branch("nSteps",&nSteps,"nSteps/I");
   t->Branch("nSec",&nSec,"nSec[nSteps]/I");
-   
+
+  t->Branch("nIonAlStep",&nIonAlStep,"nIonAlStep[nSteps]/I");
+  
   t->Branch("Trjposx",&Trjposx,"Trjposx[20]/D");
   t->Branch("Trjposy",&Trjposy,"Trjposy[20]/D");
   t->Branch("Trjposz",&Trjposz,"Trjposz[20]/D");
@@ -215,6 +225,10 @@ void TrGEMAnalysis::PrepareNewRun(const G4Run* /*aRun*/)
   t->Branch("Trjposy_perstep",&Trjposy_perstep,"Trjposy_perstep[nSteps]/D");
   t->Branch("Trjposz_perstep",&Trjposz_perstep,"Trjposz_perstep[nSteps]/D");
 
+  t->Branch("posIAlStepx",&posIAlStepx,"posIAlStepx[nSteps][nIonAlStep]/D");
+  t->Branch("posIAlStepy",&posIAlStepy,"posIAlStepy[nSteps][nIonAlStep]/D");
+  t->Branch("posIAlStepz",&posIAlStepz,"posIAlStepz[nSteps][nIonAlStep]/D");
+  
   t->Branch("SLength_perstep",&SLength_perstep,"SLength_perstep[nSteps]/D");
   t->Branch("ETot_perstep",&ETot_perstep,"ETot_perstep[nSteps]/D");
   t->Branch("Nclust_perstep",&Nclust_perstep,"Nclust_perstep[nSteps]/I");  
@@ -397,6 +411,22 @@ void TrGEMAnalysis::AddSLength_perstep(G4int count, G4double sl)
 void TrGEMAnalysis::AddnSteps()
 {
   nSteps++;
+}
+
+void TrGEMAnalysis::AddnIonAlStep(G4int count, G4int nias){
+  nIonAlStep[count-1] = nias;
+}
+
+void TrGEMAnalysis::AddnIonPosXStep(G4int count, G4int nion, G4double posx){
+  posIAlStepx[count-1][nion-1] = posx;
+}
+
+void TrGEMAnalysis::AddnIonPosYStep(G4int count, G4int nion, G4double posy){
+  posIAlStepy[count-1][nion-1] = posy;
+}
+
+void TrGEMAnalysis::AddnIonPosZStep(G4int count, G4int nion, G4double posz){
+  posIAlStepz[count-1][nion-1] = posz;
 }
 
 void TrGEMAnalysis::AddnSec(G4int count, G4int nsec){

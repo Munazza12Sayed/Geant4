@@ -207,13 +207,25 @@ G4bool GasGapSensitiveDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
   fCluster2 = fElIonPair->MeanNumberOfIonsAlongStep(step);
   fpos = fElIonPair->SampleIonsAlongStep(step);
 
-
   G4cout<<"  Number of Ion clusters  "<<fCluster<<G4endl;
   TrGEMAnalysis::GetInstance()->AddNclust_perstep(nstep,fCluster);
   TrGEMAnalysis::GetInstance()->AddNclust2_perstep(nstep,fCluster2);
 
-  G4cout<<"  Position of Ion clusters  "<<fpos<<G4endl;
-  //TrGEMAnalysis::GetInstance()->AddNclust_perstep(nstep,fpos);
+  //  if(fpos->size()>0){
+  //    G4int nionclust = fpos->size();
+  //    G4cout<<"  Size of ion clusters along step  "<<nionclust<<G4endl;
+    //    TrGEMAnalysis::GetInstance()->AddnIonAlStep(nstep,nionclust);
+  //  }
+  
+  //  fpos->clear();
+  
+  //    for(int ni=0;ni<fpos->size();ni++){
+
+    //    TrGEMAnalysis::GetInstance()->AddnIonPosXStep(nstep,ni, fpos[ni]);
+    // TrGEMAnalysis::GetInstance()->AddnIonPosYStep(nstep,ni, fpos[ni].getY());
+    // TrGEMAnalysis::GetInstance()->AddnIonPosZStep(nstep,ni, fpos[ni].getZ());
+
+  //  }
  
 
 
@@ -523,6 +535,7 @@ void GasGapSensitiveDetector::Initialize(G4HCofThisEvent* HCE)
   
   // Reset map of hits
   hitMap.clear() ;
+  //  fpos->clear();
 }
 
 void GasGapSensitiveDetector::EndOfEvent(G4HCofThisEvent*)
