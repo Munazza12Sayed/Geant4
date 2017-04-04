@@ -77,11 +77,15 @@ void TrGEMAnalysis::PrepareNewEvent(const G4Event* /*anEvent*/)
     nSec[k] = 0;
     nIonAlStep[k] = 0;
 
-    for(int l=0;l<200;l++){
-      posIAlStepx[k][l] = 0;
-      posIAlStepy[k][l] = 0;
-      posIAlStepz[k][l] = 0;
-    }
+    // for(G4int l=0;l<200;l++){
+      // posIAlStepx[k][l] = 0;
+      // posIAlStepy[k][l] = 0;
+      // posIAlStepz[k][l] = 0;
+
+      posIAlStepx[k] = 0;
+      posIAlStepy[k] = 0;
+      posIAlStepz[k] = 0;
+    // }
     
   }
    
@@ -225,9 +229,13 @@ void TrGEMAnalysis::PrepareNewRun(const G4Run* /*aRun*/)
   t->Branch("Trjposy_perstep",&Trjposy_perstep,"Trjposy_perstep[nSteps]/D");
   t->Branch("Trjposz_perstep",&Trjposz_perstep,"Trjposz_perstep[nSteps]/D");
 
-  t->Branch("posIAlStepx",&posIAlStepx,"posIAlStepx[nSteps][nIonAlStep]/D");
-  t->Branch("posIAlStepy",&posIAlStepy,"posIAlStepy[nSteps][nIonAlStep]/D");
-  t->Branch("posIAlStepz",&posIAlStepz,"posIAlStepz[nSteps][nIonAlStep]/D");
+  // t->Branch("posIAlStepx",&posIAlStepx,"posIAlStepx[nSteps][nIonAlStep]/D");
+  // t->Branch("posIAlStepy",&posIAlStepy,"posIAlStepy[nSteps][nIonAlStep]/D");
+  // t->Branch("posIAlStepz",&posIAlStepz,"posIAlStepz[nSteps][nIonAlStep]/D");
+
+  t->Branch("posIAlStepx",&posIAlStepx,"posIAlStepx[nIonAlStep]/D");
+  t->Branch("posIAlStepy",&posIAlStepy,"posIAlStepy[nIonAlStep]/D");
+  t->Branch("posIAlStepz",&posIAlStepz,"posIAlStepz[nIonAlStep]/D");
   
   t->Branch("SLength_perstep",&SLength_perstep,"SLength_perstep[nSteps]/D");
   t->Branch("ETot_perstep",&ETot_perstep,"ETot_perstep[nSteps]/D");
@@ -417,17 +425,33 @@ void TrGEMAnalysis::AddnIonAlStep(G4int count, G4int nias){
   nIonAlStep[count-1] = nias;
 }
 
-void TrGEMAnalysis::AddnIonPosXStep(G4int count, G4int nion, G4double posx){
-  posIAlStepx[count-1][nion-1] = posx;
+// void TrGEMAnalysis::AddnIonPosXStep(G4int count, G4int nion, G4double posx){
+//   posIAlStepx[count-1][nion-1] = posx;
+// }
+
+// void TrGEMAnalysis::AddnIonPosYStep(G4int count, G4int nion, G4double posy){
+//   posIAlStepy[count-1][nion-1] = posy;
+// }
+
+// void TrGEMAnalysis::AddnIonPosZStep(G4int count, G4int nion, G4double posz){
+//   posIAlStepz[count-1][nion-1] = posz;
+// }
+
+
+void TrGEMAnalysis::AddnIonPosXStep(G4int countion, G4double posx){
+  posIAlStepx[countion] = posx;
 }
 
-void TrGEMAnalysis::AddnIonPosYStep(G4int count, G4int nion, G4double posy){
-  posIAlStepy[count-1][nion-1] = posy;
+void TrGEMAnalysis::AddnIonPosYStep(G4int countion, G4double posy){
+  posIAlStepy[countion] = posy;
 }
 
-void TrGEMAnalysis::AddnIonPosZStep(G4int count, G4int nion, G4double posz){
-  posIAlStepz[count-1][nion-1] = posz;
+void TrGEMAnalysis::AddnIonPosZStep(G4int countion, G4double posz){
+  posIAlStepz[countion] = posz;
 }
+
+
+
 
 void TrGEMAnalysis::AddnSec(G4int count, G4int nsec){
   nSec[count-1] = nsec;
