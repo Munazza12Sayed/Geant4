@@ -207,6 +207,8 @@ G4bool GasGapSensitiveDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
   fCluster2 = fElIonPair->MeanNumberOfIonsAlongStep(step);
   fpos = fElIonPair->SampleIonsAlongStep(step);
 
+  void DumpMeanEnergyPerIonPair();
+
   G4cout<<"  Number of Ion clusters  "<<fCluster<<G4endl;
   TrGEMAnalysis::GetInstance()->AddNclust_perstep(nstep,fCluster);
   TrGEMAnalysis::GetInstance()->AddNclust2_perstep(nstep,fCluster2);
