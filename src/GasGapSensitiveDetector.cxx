@@ -207,33 +207,37 @@ G4bool GasGapSensitiveDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
   fCluster2 = fElIonPair->MeanNumberOfIonsAlongStep(step);
   fpos = fElIonPair->SampleIonsAlongStep(step);
 
-  void DumpMeanEnergyPerIonPair();
+ //  void DumpMeanEnergyPerIonPair();
 
   G4cout<<"  Number of Ion clusters  "<<fCluster<<G4endl;
+
+  if(fCluster>2){
+
   TrGEMAnalysis::GetInstance()->AddNclust_perstep(nstep,fCluster);
   TrGEMAnalysis::GetInstance()->AddNclust2_perstep(nstep,fCluster2);
   
-  if(fCluster>0){
-    G4int nionclust = fpos->size();
-    G4cout<<"  Size of ion clusters along step  "<<nionclust<<G4endl;
-    TrGEMAnalysis::GetInstance()->AddnIonAlStep(nstep,nionclust);
+  
+  G4int nionclust = fpos->size();
+  G4cout<<"  Size of ion clusters along step  "<<nionclust<<G4endl;
+  TrGEMAnalysis::GetInstance()->AddnIonAlStep(nstep,nionclust);
+  
+  for(int ni=0;ni<nionclust;ni++){
 
-    for(int ni=0;ni<nionclust;ni++){
+    G4ThreeVector temp; 
+    G4cout<<" somelines    "<<G4endl;
 
-      G4ThreeVector temp;
+    temp = (*fpos)[ni];
 
-      temp = (*fpos)[ni];
+    G4cout<<" position in X    "<<temp.getX()<<G4endl;
+    G4cout<<" position in Y    "<<temp.getY()<<G4endl;
+    G4cout<<" position in Z    "<<temp.getZ()<<G4endl;
 
-      G4cout<<" position in X    "<<temp.getX()<<G4endl;
-      G4cout<<" position in Y    "<<temp.getY()<<G4endl;
-      G4cout<<" position in Z    "<<temp.getZ()<<G4endl;
-
-	TrGEMAnalysis::GetInstance()->AddnIonPosXStep(ni, temp.getX());
-	TrGEMAnalysis::GetInstance()->AddnIonPosYStep(ni, temp.getY());
-	TrGEMAnalysis::GetInstance()->AddnIonPosZStep(ni, temp.getZ());
+    TrGEMAnalysis::GetInstance()->AddnIonPosXStep(ni, temp.getX());
+    TrGEMAnalysis::GetInstance()->AddnIonPosYStep(ni, temp.getY());
+    TrGEMAnalysis::GetInstance()->AddnIonPosZStep(ni, temp.getZ());
       
-    }
-
+    
+  }
 
   }
   

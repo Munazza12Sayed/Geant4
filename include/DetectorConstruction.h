@@ -30,28 +30,47 @@ class DetectorMessenger;
 
 class DetectorConstruction : public G4VUserDetectorConstruction
 {
-	private:
-               G4Material*        fGasMat;
-               G4Material*        fCuMat;
-               G4Material*        fKAPTONMat;
-	       G4Material*        fFR4Mat;
-	       G4Material*        fFeMat;
-               G4Material*        fAlMat;
+ private:
+  G4Material*        fGasMat;
+  G4Material*        fCuMat;
+  G4Material*        fKAPTONMat;
+  G4Material*        fFR4Mat;
+  G4Material*        fFeMat;
+  G4Material*        fAlMat;
+  G4Material*        fEmptyMat;
+  G4Material*        fAirMat;
+  G4double           tripleGemThinBase; 
+  G4double           tripleGemLargeBase;
+  G4double           tripleGemHeight;
 
-	       G4UserLimits* stepLimit;             // pointer to user step limits
-	       DetectorMessenger* fDetectorMessenger;
-	       void DefineMaterials() ;
+  G4UserLimits* stepLimit;             // pointer to user step limits
+  DetectorMessenger* fDetectorMessenger;
+  //void DefineMaterials() ;
 	       
-	       
+  std::vector<G4Trd*>           trdCollection ;
+  std::vector<G4LogicalVolume*> trdLogCollection ;
+
+  G4ElectricField*        fEMfield;
+  G4EqMagElectricField*   fEquation;
+  G4MagIntegratorStepper* fStepper;
+  G4FieldManager*         fFieldMgr;
+  G4double                fMinStep ;
+  G4ChordFinder*          fChordFinder ;
+  G4MagInt_Driver*        fIntgrDriver;
+
 		
-	public:
-		DetectorConstruction();
-		virtual ~DetectorConstruction();
-		void SetPairEnergy(G4double);
+ public:
+  DetectorConstruction();
+  virtual ~DetectorConstruction();
+  void SetPairEnergy(G4double);		
 		
-		
-		virtual G4VPhysicalVolume* Construct();
-		virtual void ConstructSDandField();
+  virtual G4VPhysicalVolume* Construct();
+  virtual void ConstructSDandField();
+
+  void DefineMaterials() ;
+  //G4VPhysicalVolume* Construct() ;
+  G4Trd* Trapezoid(G4String name, G4double width) ;
+  void PlaceGeometry(G4RotationMatrix *pRot, G4ThreeVector tlate, G4LogicalVolume *pMotherLogical) ; 
 	
 };
 

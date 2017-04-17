@@ -105,9 +105,6 @@ void PrimaryGenerator::GeneratePrimaries(G4Event* anEvent)
   
   TrGEMAnalysis::GetInstance()->AddPrimPos(particleGun->GetParticlePosition().getX(),particleGun->GetParticlePosition().getY(), particleGun->GetParticlePosition().getZ());
   //  TrGEMAnalysis::GetInstance()->AddPrimEn(particleGun->GetParticleGun()->GetParticleEnergy());
-  
-
-
-  
+    
 }
 
