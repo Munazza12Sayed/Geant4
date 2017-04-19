@@ -147,6 +147,8 @@ G4bool GasGapSensitiveDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
   G4cout<<"  (Delta Energy - Total) - EdepI  [MeV]  "<<(fabs(deltae) - edep) - edepI<<G4endl;
   G4cout<<"  Momentum magnitude              [MeV]  "<<track->GetMomentum()<<G4endl;
   G4cout<<" Kinetic energy formula           [MeV]  "<<e1Prim<<G4endl;
+
+  if(volName="GasGap1"){
   
   double x= track->GetPosition().getX();
   double y= track->GetPosition().getY();
@@ -235,12 +237,13 @@ G4bool GasGapSensitiveDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
     TrGEMAnalysis::GetInstance()->AddnIonPosXStep(ni, temp.getX());
     TrGEMAnalysis::GetInstance()->AddnIonPosYStep(ni, temp.getY());
     TrGEMAnalysis::GetInstance()->AddnIonPosZStep(ni, temp.getZ());
-      
+
     
   }
 
   }
-  
+
+  }
   //  fpos->clear();
   //  const G4SteppingManager* pSM = fpSteppingManager;
   

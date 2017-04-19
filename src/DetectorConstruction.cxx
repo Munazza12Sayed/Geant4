@@ -173,9 +173,9 @@ DefineMaterials() ;
   // SD Manager 
   G4SDManager* sdman = G4SDManager::GetSDMpointer() ;
 
-   G4double worldSizeX = 10*m;
-   G4double worldSizeY = 10*m;
-   G4double worldSizeZ = 10*m;
+   G4double worldSizeX = 3*m;
+   G4double worldSizeY = 3*m;
+   G4double worldSizeZ = 1*m;
 
  // Rotation Matrix for layers
    G4RotationMatrix* rotationPlacement = new G4RotationMatrix() ;
@@ -231,17 +231,17 @@ DefineMaterials() ;
 						   checkOverlaps);	//overlap checking
   //______________________________________________________________________________________
 
-  G4double gasgapwidth=1*cm;
+//   G4double gasgapwidth=1*cm;
   
-  G4Box* solidGasGap = new G4Box("GasGap",4.*cm,4.*cm,gasgapwidth/2.);
-  G4LogicalVolume* logicGasGap = new G4LogicalVolume (solidGasGap,fGasMat,"GasGap");
-  G4ThreeVector posGasGap = G4ThreeVector(0,0,0);
-new G4PVPlacement(0,posGasGap,logicGasGap,"GasGap",worldLog,false,0,checkOverlaps);
+//   G4Box* solidGasGap = new G4Box("GasGap",4.*cm,4.*cm,gasgapwidth/2.);
+//   G4LogicalVolume* logicGasGap = new G4LogicalVolume (solidGasGap,fGasMat,"GasGap");
+//   G4ThreeVector posGasGap = G4ThreeVector(0,0,0);
+// new G4PVPlacement(0,posGasGap,logicGasGap,"GasGap",worldLog,false,0,checkOverlaps);
       
-  G4String GasGapSDname="GasGap";
-  GasGapSensitiveDetector* GasGapSD = new GasGapSensitiveDetector(GasGapSDname) ;
-  sdman->AddNewDetector(GasGapSD) ;
-  logicGasGap->SetSensitiveDetector(GasGapSD);
+//   G4String GasGapSDname="GasGap";
+//   GasGapSensitiveDetector* GasGapSD = new GasGapSensitiveDetector(GasGapSDname) ;
+//   sdman->AddNewDetector(GasGapSD) ;
+//   logicGasGap->SetSensitiveDetector(GasGapSD);
 
   // G4double ionizationPotential = 0.7*26*eV + 0.3*33*eV = 28.1 ; // Ar:CO2(70:30)
   if(0.0 == fGasMat->GetIonisation()->GetMeanEnergyPerIonPair()) {
@@ -310,12 +310,12 @@ new G4PVPlacement(0,posGasGap,logicGasGap,"GasGap",worldLog,false,0,checkOverlap
 		
 		for(G4int lyr=0;lyr<21;lyr++){
 			
-			strato=Trapezoid(NomeStrati[lyr], spessoreStrati[lyr]);
-		        logicStrato = new G4LogicalVolume (strato, MatStrati[lyr],NomeStratiLog[lyr]);   
-			logicStrato->SetVisAttributes(new G4VisAttributes(*gemAttributes)) ;
-			trdCollection.push_back(strato) ;
-		        trdLogCollection.push_back(logicStrato) ;
-			trdLogCollection[lyr]->SetSensitiveDetector(sensitive) ;		   
+		  strato=Trapezoid(NomeStrati[lyr], spessoreStrati[lyr]);
+		  logicStrato = new G4LogicalVolume (strato, MatStrati[lyr],NomeStratiLog[lyr]);   
+		  logicStrato->SetVisAttributes(new G4VisAttributes(*gemAttributes)) ;
+		  trdCollection.push_back(strato) ;
+		  trdLogCollection.push_back(logicStrato) ;
+		  trdLogCollection[lyr]->SetSensitiveDetector(sensitive) ;		   
 		}
 
    PlaceGeometry(rotationPlacement,G4ThreeVector(0.,0.,0.),worldLog) ;

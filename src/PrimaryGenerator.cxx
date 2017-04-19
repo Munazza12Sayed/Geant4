@@ -85,7 +85,7 @@ void PrimaryGenerator::SetDefaultKinematic()
     = particleTable->FindParticle(particleName="mu-");
   fParticleGun->SetParticleDefinition(particle);
   fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.,0.,1.));
-  fParticleGun->SetParticlePosition(G4ThreeVector(0.*cm,0.*cm,-2.4*cm));
+  fParticleGun->SetParticlePosition(G4ThreeVector(0.*cm,0.*cm,-50.4*cm));
   particleGun = fParticleGun;
 }
 
