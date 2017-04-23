@@ -65,6 +65,7 @@ void TrGEMAnalysis::PrepareNewEvent(const G4Event* /*anEvent*/)
     Nclust_perstep[k] = 0;
     Nclust2_perstep[k] = 0;
     ETot_perstep[k] = -10000.;
+    VolumeName_perstep[k]= -10000.;
     EDelta_perstep[k] = -10000.;
     EDepI_perstep[k] = -10000.;
     EDepSec_perstep[k] = -10000.;
@@ -239,6 +240,7 @@ void TrGEMAnalysis::PrepareNewRun(const G4Run* /*aRun*/)
   
   t->Branch("SLength_perstep",&SLength_perstep,"SLength_perstep[nSteps]/D");
   t->Branch("ETot_perstep",&ETot_perstep,"ETot_perstep[nSteps]/D");
+  t->Branch("VolumeName_perstep",&VolumeName_perstep,"VolumeName_perstep[nSteps]/D");
   t->Branch("Nclust_perstep",&Nclust_perstep,"Nclust_perstep[nSteps]/I");  
   t->Branch("Nclust2_perstep",&Nclust2_perstep,"Nclust2_perstep[nSteps]/I");
   t->Branch("EDelta_perstep",&EDelta_perstep,"EDelta_perstep[nSteps]/D");
@@ -498,6 +500,10 @@ void TrGEMAnalysis::AddTrajPos_perstep(G4int numstep, G4double posx, G4double po
 
 void TrGEMAnalysis::AddEDepI_perstep(G4int numstep, G4double edepi){
   EDepI_perstep[numstep-1] = edepi;
+}
+
+void TrGEMAnalysis::AddVolumeName_perstep(G4int numstep, G4double volnameID){
+  VolumeName_perstep[numstep-1] = volnameID ;
 }
 
 void TrGEMAnalysis::AddEDelta_perstep(G4int numstep, G4double edelta){

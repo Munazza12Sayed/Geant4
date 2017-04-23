@@ -52,6 +52,7 @@ class TrGEMAnalysis {
       void AddTrajPos(G4int count, G4double trjx,G4double trjy, G4double trjz);
       void AddTrajPos_perstep(G4int nstep, G4double trjx,G4double trjy, G4double trjz);
       void AddETot_perstep(G4int nstep, G4double etot);
+      void AddVolumeName_perstep(G4int nstep, G4double volnameID);
       void AddNclust_perstep(G4int nstep,G4int nclust);
       void AddNclust2_perstep(G4int nstep,G4int nclust2);
       void AddEtotSteps(G4double epstep);
@@ -158,6 +159,7 @@ class TrGEMAnalysis {
 
   G4double SLength_perstep[200];
   G4double ETot_perstep[200];
+  G4double VolumeName_perstep[200];
   G4int    Nclust_perstep[200];
   G4int    Nclust2_perstep[200];
   G4double EDelta_perstep[200];

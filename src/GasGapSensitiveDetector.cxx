@@ -148,6 +148,34 @@ G4bool GasGapSensitiveDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
   G4cout<<"  Momentum magnitude              [MeV]  "<<track->GetMomentum()<<G4endl;
   G4cout<<" Kinetic energy formula           [MeV]  "<<e1Prim<<G4endl;
 
+  float VolumeNameID= -1000;
+  if(volName=="FakeBottom") VolumeNameID= 0;
+  if(volName=="DriftCopper1") VolumeNameID= 1;
+  if(volName=="DriftBoard") VolumeNameID= 2;
+  if(volName=="DriftCopper2") VolumeNameID= 3;
+  if(volName=="GasGap1") VolumeNameID= 4;
+  if(volName=="Gem1Copper1") VolumeNameID= 5;
+  if(volName=="Gem1") VolumeNameID= 6;
+  if(volName=="Gem1Copper2") VolumeNameID= 7;
+  if(volName=="GasGap2") VolumeNameID= 8;
+  if(volName=="Gem2Copper1") VolumeNameID= 9;
+  if(volName=="Gem2") VolumeNameID== 10;
+  if(volName=="Gem2Copper2") VolumeNameID= 11;
+  if(volName=="GasGap3") VolumeNameID= 12;
+  if(volName=="Gem3Copper1") VolumeNameID= 13;
+  if(volName=="Gem3") VolumeNameID== 14;
+  if(volName=="Gem3Copper2") VolumeNameID= 15;
+  if(volName=="GasGap4") VolumeNameID= 16;
+  if(volName=="ReadCopper1") VolumeNameID= 17;
+  if(volName=="ReadoutBoard") VolumeNameID= 18;
+  if(volName=="ReadCopper2") VolumeNameID= 19;
+  if(volName=="FakeTop") VolumeNameID= 20;
+
+  TrGEMAnalysis::GetInstance()->AddnSteps();
+  G4int nstep = TrGEMAnalysis::GetInstance()->GetnStep();
+  G4cout<<" This is the Step number   "<<nstep<<G4endl;
+   TrGEMAnalysis::GetInstance()->AddVolumeName_perstep(nstep,VolumeNameID);
+
   if(volName="GasGap1"){
   
   double x= track->GetPosition().getX();
@@ -158,13 +186,7 @@ G4bool GasGapSensitiveDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
   G4cout<<"  Track position   y [mm]  "<<y<<G4endl;
   G4cout<<"  Track position   z [mm]  "<<z<<G4endl;
 
-  TrGEMAnalysis::GetInstance()->AddnSteps();
-
-  G4int nstep = TrGEMAnalysis::GetInstance()->GetnStep();
-
-  G4cout<<" This is the Step number   "<<nstep<<G4endl;
-
-  //  if( fabs(step->GetTrack()->GetParticleDefinition()->GetPDGEncoding()) == 13){
+   //  if( fabs(step->GetTrack()->GetParticleDefinition()->GetPDGEncoding()) == 13){
   TrGEMAnalysis::GetInstance()->AddEtotSteps(edepI);
   TrGEMAnalysis::GetInstance()->AdddeltaEtotSteps(deltae);
   //  }
@@ -173,6 +195,7 @@ G4bool GasGapSensitiveDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
   TrGEMAnalysis::GetInstance()->AddTrajPos_perstep(nstep,x,y,z);
   TrGEMAnalysis::GetInstance()->AddEDepI_perstep(nstep,edepI);
   TrGEMAnalysis::GetInstance()->AddETot_perstep(nstep,edep);
+ 
   TrGEMAnalysis::GetInstance()->AddEDelta_perstep(nstep,deltae);
   TrGEMAnalysis::GetInstance()->AddEDepSec_perstep(nstep,fabs(deltae)-edep);
   TrGEMAnalysis::GetInstance()->AddEDepImSec_perstep(nstep,(fabs(deltae)-edep)-edepI);
