@@ -40,9 +40,9 @@ class TrGEMAnalysis {
      //  void AddnIonPosYStep(G4int count,G4int nion,G4double posy);
      //  void AddnIonPosZStep(G4int count,G4int nion,G4double posz);
 
-      void AddnIonPosXStep(G4int nion,G4double posx);
-      void AddnIonPosYStep(G4int nion,G4double posy);
-      void AddnIonPosZStep(G4int nion,G4double posz);
+  void AddnIonPosXStep(G4int count, G4int nion,G4double posx);
+  void AddnIonPosYStep(G4int count, G4int nion,G4double posy);
+  void AddnIonPosZStep(G4int count, G4int nion,G4double posz);
       G4int GetnStep();
       void AddTrajInf(G4int trajin);
 
@@ -140,9 +140,9 @@ class TrGEMAnalysis {
   // G4double  posIAlStepy[200][200];
   // G4double  posIAlStepz[200][200];
 
-  G4double  posIAlStepx[200];
-  G4double  posIAlStepy[200];
-  G4double  posIAlStepz[200];
+  G4double  posIAlStepx[200][200];
+  G4double  posIAlStepy[200][200];
+  G4double  posIAlStepz[200][200];
   G4int     Trajnum;
   G4int     TrajPoint;
   G4int     pdgIDstep[200];

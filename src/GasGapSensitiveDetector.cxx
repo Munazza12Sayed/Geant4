@@ -111,7 +111,7 @@ G4bool GasGapSensitiveDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
   G4int copyNo = touchable->GetVolume(0)->GetCopyNo();
   G4int layerIndex = copyNo;
   G4String volName = touchable->GetVolume(0)->GetName();
-
+    
   //We get now the energy deposited by this step
   G4double edep = step->GetTotalEnergyDeposit(); 
   G4Track* track = step->GetTrack();
@@ -149,35 +149,38 @@ G4bool GasGapSensitiveDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
   G4cout<<" Kinetic energy formula           [MeV]  "<<e1Prim<<G4endl;
 
   float VolumeNameID= -1000;
-  if(volName=="FakeBottom") VolumeNameID= 0;
-  if(volName=="DriftCopper1") VolumeNameID= 1;
-  if(volName=="DriftBoard") VolumeNameID= 2;
-  if(volName=="DriftCopper2") VolumeNameID= 3;
-  if(volName=="GasGap1") VolumeNameID= 4;
-  if(volName=="Gem1Copper1") VolumeNameID= 5;
-  if(volName=="Gem1") VolumeNameID= 6;
-  if(volName=="Gem1Copper2") VolumeNameID= 7;
-  if(volName=="GasGap2") VolumeNameID= 8;
-  if(volName=="Gem2Copper1") VolumeNameID= 9;
-  if(volName=="Gem2") VolumeNameID== 10;
-  if(volName=="Gem2Copper2") VolumeNameID= 11;
-  if(volName=="GasGap3") VolumeNameID= 12;
-  if(volName=="Gem3Copper1") VolumeNameID= 13;
-  if(volName=="Gem3") VolumeNameID== 14;
-  if(volName=="Gem3Copper2") VolumeNameID= 15;
-  if(volName=="GasGap4") VolumeNameID= 16;
-  if(volName=="ReadCopper1") VolumeNameID= 17;
-  if(volName=="ReadoutBoard") VolumeNameID= 18;
-  if(volName=="ReadCopper2") VolumeNameID= 19;
-  if(volName=="FakeTop") VolumeNameID= 20;
+  if(volName=="FakeBottom") VolumeNameID= 1;
+  if(volName=="DriftCopper1") VolumeNameID= 2;
+  if(volName=="DriftBoard") VolumeNameID= 3;
+  if(volName=="DriftCopper2") VolumeNameID= 4;
+  if(volName=="GasGap1") VolumeNameID= 5;
+  if(volName=="Gem1Copper1") VolumeNameID= 6;
+  if(volName=="Gem1") VolumeNameID= 7;
+  if(volName=="Gem1Copper2") VolumeNameID= 8;
+  if(volName=="GasGap2") VolumeNameID= 9;
+  if(volName=="Gem2Copper1") VolumeNameID= 10;
+  if(volName=="Gem2") VolumeNameID== 11;
+  if(volName=="Gem2Copper2") VolumeNameID= 12;
+  if(volName=="GasGap3") VolumeNameID= 13;
+  if(volName=="Gem3Copper1") VolumeNameID= 14;
+  if(volName=="Gem3") VolumeNameID== 15;
+  if(volName=="Gem3Copper2") VolumeNameID= 16;
+  if(volName=="GasGap4") VolumeNameID= 17;
+  if(volName=="ReadCopper1") VolumeNameID= 18;
+  if(volName=="ReadoutBoard") VolumeNameID= 19;
+  if(volName=="ReadCopper2") VolumeNameID= 20;
+  if(volName=="FakeTop") VolumeNameID= 21;
 
+//   TrGEMAnalysis::GetInstance()->AddnSteps();
+//   G4int nstep = TrGEMAnalysis::GetInstance()->GetnStep();
+//   G4cout<<" This is the Step number   "<<nstep<<G4endl;
+  // TrGEMAnalysis::GetInstance()->AddVolumeName_perstep(nstep,VolumeNameID);
+
+  if(volName=="GasGap1"){
   TrGEMAnalysis::GetInstance()->AddnSteps();
   G4int nstep = TrGEMAnalysis::GetInstance()->GetnStep();
   G4cout<<" This is the Step number   "<<nstep<<G4endl;
    TrGEMAnalysis::GetInstance()->AddVolumeName_perstep(nstep,VolumeNameID);
-
-  if(volName="GasGap1"){
-  
   double x= track->GetPosition().getX();
   double y= track->GetPosition().getY();
   double z= track->GetPosition().getZ();
@@ -194,6 +197,8 @@ G4bool GasGapSensitiveDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
   
   TrGEMAnalysis::GetInstance()->AddTrajPos_perstep(nstep,x,y,z);
   TrGEMAnalysis::GetInstance()->AddEDepI_perstep(nstep,edepI);
+  G4cout<<"  Energy lost by ionizationnn  "<<edepI<<G4endl;
+  
   TrGEMAnalysis::GetInstance()->AddETot_perstep(nstep,edep);
  
   TrGEMAnalysis::GetInstance()->AddEDelta_perstep(nstep,deltae);
@@ -215,7 +220,7 @@ G4bool GasGapSensitiveDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
   G4int pdg = track->GetParticleDefinition()->GetPDGEncoding();
   TrGEMAnalysis::GetInstance()->AddPDGID(nstep,pdg);
   G4StepPoint* point = step->GetPostStepPoint();
-  const G4VProcess* proc = point->GetProcessDefinedStep();
+  const G4VProcess* proc =point->GetProcessDefinedStep();
   const G4String procname = proc->GetProcessName();
   G4int trackIndex=track->GetTrackID();
   double genz= track->GetVertexPosition().getZ(); 
@@ -238,6 +243,9 @@ G4bool GasGapSensitiveDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
 
   if(fCluster>2){
 
+  G4cout<<"  Number of Ion clustersss  "<<fCluster<<G4endl;
+
+
   TrGEMAnalysis::GetInstance()->AddNclust_perstep(nstep,fCluster);
   TrGEMAnalysis::GetInstance()->AddNclust2_perstep(nstep,fCluster2);
   
@@ -257,9 +265,9 @@ G4bool GasGapSensitiveDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
     G4cout<<" position in Y    "<<temp.getY()<<G4endl;
     G4cout<<" position in Z    "<<temp.getZ()<<G4endl;
 
-    TrGEMAnalysis::GetInstance()->AddnIonPosXStep(ni, temp.getX());
-    TrGEMAnalysis::GetInstance()->AddnIonPosYStep(ni, temp.getY());
-    TrGEMAnalysis::GetInstance()->AddnIonPosZStep(ni, temp.getZ());
+    TrGEMAnalysis::GetInstance()->AddnIonPosXStep(nstep,ni, temp.getX());
+    TrGEMAnalysis::GetInstance()->AddnIonPosYStep(nstep,ni, temp.getY());
+    TrGEMAnalysis::GetInstance()->AddnIonPosZStep(nstep,ni, temp.getZ());
 
     
   }
