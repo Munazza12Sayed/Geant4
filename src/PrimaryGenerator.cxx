@@ -23,7 +23,6 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-
 #include "PrimaryGenerator.h"
 #include "PrimaryGeneratorMessenger.hh"
 
@@ -69,6 +68,8 @@ PrimaryGenerator::PrimaryGenerator()
 PrimaryGenerator::~PrimaryGenerator()
 {
   //  delete HEPEvt;
+  delete fParticleGun;
+  delete fGunMessenger;
   delete particleGun;
   delete gunMessenger;
 }
@@ -87,20 +88,42 @@ void PrimaryGenerator::SetDefaultKinematic()
   fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.,0.707,0.707));
   fParticleGun->SetParticlePosition(G4ThreeVector(0.*cm,0.*cm,-2.4*cm));
   particleGun = fParticleGun;
+
 }
-
-
 void PrimaryGenerator::SetEnBeam(G4double Enval){
   fParticleGun->SetParticleEnergy(Enval);
   G4cout<<" Energy of particle set to   "<<Enval<<"  [MeV]  "<<G4endl;
 }
 
-void PrimaryGenerator::GeneratePrimaries(G4Event* anEvent)
-{
+// void PrimaryGenerator::GeneratePrimaries(G4Event* anEvent)
+// {
+//  if (fRndmBeam > 0.) {
+//     G4double s_proj = fRndmBeam/std::sqrt(2.);
+//     G4double x0, y0;     
+//     do {
+//         x0 = G4RandGauss::shoot(0.,s_proj);
+//         y0 = G4RandGauss::shoot(0.,s_proj);      
+//     } while ((x0*x0 + y0*y0) > fR2World);
+
+    fParticleGun->SetParticlePosition(G4ThreeVector(x0,y0,fZ0));
   // if(useHEPEvt)
   // { HEPEvt->GeneratePrimaryVertex(anEvent); }
   // else
   // { particleGun->GeneratePrimaryVertex(anEvent); }
+
+
+void RE02PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
+    { 
+    
+      G4ThreeVector position = fParticleGun->GetParticlePosition();
+      G4double dx = (G4UniformRand()-0.5)*fSigmaPosition;
+      G4double dy = (G4UniformRand()-0.5)*fSigmaPosition;
+      position.setX(dx);
+      position.setY(dy);
+      fParticleGun->SetParticlePosition(position);
+      fParticleGun->GeneratePrimaryVertex(anEvent);
+   }
+
   particleGun->GeneratePrimaryVertex(anEvent);
   
   TrGEMAnalysis::GetInstance()->AddPrimPos(particleGun->GetParticlePosition().getX(),particleGun->GetParticlePosition().getY(), particleGun->GetParticlePosition().getZ());
