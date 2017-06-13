@@ -30,6 +30,9 @@
 #include "G4VUserPrimaryGeneratorAction.hh"
 #include "globals.hh"
 #include  "G4ParticleGun.hh"
+#include "CLHEP/Random/JamesRandom.h"
+#include "CLHEP/Random/RandGauss.h"
+
 
 class G4VPrimaryGenerator;
 class G4Event;
@@ -55,7 +58,12 @@ class PrimaryGenerator : public G4VUserPrimaryGeneratorAction
     //    ExN04PrimaryGeneratorMessenger* messenger;
     //    G4bool useHEPEvt;
     G4double    Enval;
-    PrimaryGeneratorMessenger* gunMessenger;                                                                                                                                            
+    G4double    fSigmaPosition;
+    PrimaryGeneratorMessenger* gunMessenger;                                                                                             /// CLHEP random engine.
+        CLHEP::HepRandomEngine* fRandomEngine;
+        
+        /// CLHEP random engine used in gaussian smearing.
+	CLHEP::RandGauss* fRandomGauss;                                                
 
 
   public:
@@ -64,6 +72,7 @@ class PrimaryGenerator : public G4VUserPrimaryGeneratorAction
     //    inline G4bool GetHEPEvtGenerator()
     //    { return useHEPEvt; }
 };
+
 
 #endif
 
